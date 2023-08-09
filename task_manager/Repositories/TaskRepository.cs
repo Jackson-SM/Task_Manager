@@ -11,8 +11,8 @@ namespace task_manager.Repositories
     {
         public void Create(string title, string description);
         public void ToListTasks();
-        public void Update(Tasks task);
+        public void Update(int id, string title, string description);
         public void Delete(int id);
-        public void GetById(int id);
+        public Tasks GetById(int id);
     }
 }
