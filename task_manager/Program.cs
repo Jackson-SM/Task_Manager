@@ -43,12 +43,31 @@ internal class Program
                     break;
                 case 3:
                     Console.Clear();
+                    Console.Write("Id da Task: ");
+                    int _ = int.Parse(Console.ReadLine());
+                    Tasks task = taskService.GetById(_);
+                    Console.WriteLine(task);
                     break;
                 case 4:
                     Console.Clear();
+
+                    Console.Write("Digite o ID da Task: ");
+                    _ = int.Parse(Console.ReadLine());
+                    Console.Write("Digite o novo Título: ");
+                    String titleUpdate = Console.ReadLine();
+                    Console.Write("Digite a nova descrição: ");
+                    String descriptionUpdate = Console.ReadLine();
+
+
+                    taskService.Update(_, titleUpdate, descriptionUpdate);
                     break;
                 case 5:
                     Console.Clear();
+
+                    Console.Write("Digite o ID da Task: ");
+                    int idDelete = int.Parse(Console.ReadLine());
+
+                    taskService.Delete(idDelete);
                     break;
                 case 6:
                     Environment.Exit(0);
