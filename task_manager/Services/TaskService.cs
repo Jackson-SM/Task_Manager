@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using task_manager.Entity;
 using task_manager.Repositories;
 
@@ -15,32 +16,52 @@ namespace task_manager.Services
 
         public void Create(string title, string description)
         {
-            int idGenerated = TaskList[TaskList.Count - 1].Id;
+            int idGenerated = TaskList.Count < 1 ? TaskList.Count : TaskList[TaskList.Count - 1].Id + 1;
             Tasks task = new Tasks(idGenerated, title, description);
             TaskList.Add(task);
         }
 
-        public void Update(Tasks task)
+        public void Update(int id,string title, string description)
         {
-            Tasks taskSearching = TaskList.Find(tasks => tasks.Id.Equals(task.Id));
-            if (taskSearching == null) {
-                Console.WriteLine($"Erro: o Id {task.Id} não existe na lista!");
-            }
-            Console.WriteLine(taskSearching);
+            Tasks taskSearchingIndexOf = this.GetById(id);
+
+            int indexOfTask = TaskList.FindIndex(task => task.Id.Equals(taskSearchingIndexOf.Id));
+
+            TaskList[indexOfTask].Title = title.Trim().Length <= 0 ? TaskList[indexOfTask].Title : title;
+            TaskList[indexOfTask].Description = description.Trim().Length <= 0 ? TaskList[indexOfTask].Description : description;
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            Tasks taskForId = this.GetById(id);
+            bool taskIndexOf = TaskList.Remove(taskForId);
+
+            if(!taskIndexOf)
+            {
+                throw new Exception("Não foi possível remover a task selecionada.");
+            }
+
         }
 
-        public void GetById(int id)
+        public Tasks GetById(int id)
         {
-            throw new NotImplementedException();
+            Tasks taskSearching = TaskList.Find(tasks => tasks.Id.Equals(id));
+            if (taskSearching == null)
+            {
+                throw new Exception("Não foi possível encontrar a task selecionada.");
+            }
+
+            return taskSearching;
         }
 
         public void ToListTasks()
         {
+            if(TaskList.Count < 1)
+            {
+                Console.WriteLine("<============================= Não possui Tasks =============================>");
+                return;
+            }
+
             TaskList.ForEach(task => {
                 Console.WriteLine(task);
             });
