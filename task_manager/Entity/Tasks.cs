@@ -20,6 +20,6 @@ namespace task_manager.Entity
             Description = description;
         }
 
-        public override string? ToString() => $"=================================\nId -> {Id}\nName -> {Title}\nDescription -> {Description}\n=================================";
+        public override string? ToString() => $"\n\n\n\n\n=================================\nId: {Id}\nName: {Title}\nDescription: {Description}\n=================================\n\n\n\n\n";
     }
 }
